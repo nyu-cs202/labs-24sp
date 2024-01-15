@@ -1,0 +1,8 @@
+# We do not want to change line endings for 
+# cs202-run-docker on windows
+cs202-run-docker text eol=lf
+
+# Scripts do not like autocrlf
+*.sh text eol=lf
+*.bats text eol=lf
+*.bash text eol=lf
