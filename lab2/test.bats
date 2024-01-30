@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 setup() {
-   export TEST_DIR="d$(date '+%Y%m%d%H%M%S')"
+   export TEST_DIR="/tmp/d$(date '+%Y%m%d%H%M%S')"
    ./mktest.sh ${TEST_DIR}
 }
 
