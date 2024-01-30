@@ -165,6 +165,8 @@ RUN git config --global user.name "${USER}" && \
  rm -f ~/.bash_logout && \
  echo "add-auto-load-safe-path ~" > ~/.gdbinit
 
+RUN sudo chmod -t /tmp
+
 WORKDIR /home/cs202-user
 CMD ["/bin/bash", "-l"]
 
