@@ -19,4 +19,8 @@ clean:
 	$(RM) $(TARGET_EXEC) $(OBJS)
 
 test: $(TARGET_EXEC) 
-	@exec ./test.bats
+	@if ls -al /tmp/ | grep " \.$$" | grep ".\{6\}rwt"; then \
+	    echo "Sticky bit set in /tmp. Did you rebuild your Docker image, per the lab instructions?"; \
+	else \
+	    exec ./test.bats; \
+	fi
