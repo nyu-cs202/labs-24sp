@@ -84,7 +84,7 @@ static int group_for_gid(gid_t gid, char* buf, size_t buflen) {
 }
 
 /*
- * Format the supplied `struct timespec` in `ts` (e.g., from `stat.st_mtim`) as a
+ * Format the supplied `struct timespec` in `ts` (e.g., from `stat.st_mtime`) as a
  * string in `char *out`. Returns the length of the formatted string (see, `man
  * 3 strftime`).
  */
