@@ -29,7 +29,7 @@ class TaskQueue {
     
     // no default copy constructor and assignment operators. this will prevent some
     // painful bugs by converting them into compiler errors.
-    TaskQueue(const TaskQueue&) = delete; 
+    TaskQueue(const TaskQueue&) = delete;
     TaskQueue& operator=(const TaskQueue &) = delete;
 
     void enqueue(Task task);

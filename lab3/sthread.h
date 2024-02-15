@@ -38,8 +38,8 @@ void scond_wait(scond_t *cond, smutex_t *mutex);
 
 
 void sthread_create(sthread_t *thrd,
-		    void *(start_routine(void*)), 
-		    void *argToStartRoutine);
+                    void *(start_routine(void*)), 
+                    void *argToStartRoutine);
 void sthread_exit(void);
 
 /*

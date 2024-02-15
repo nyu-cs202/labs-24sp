@@ -7,13 +7,11 @@ using namespace std;
 
 Item::
 Item() : valid(false)
-{
-}
+{ }
 
 Item::
 ~Item()
-{
-}
+{ }
 
 
 EStore::

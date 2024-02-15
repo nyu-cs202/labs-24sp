@@ -41,13 +41,11 @@ rand_request()
 RequestGenerator::
 RequestGenerator(TaskQueue* queue)
     : taskQueue(queue), taskCount(0)
-{
-}
+{ }
 
 RequestGenerator::
 ~RequestGenerator()
-{
-}
+{ }
 
 void RequestGenerator::
 enqueueTasks(int maxTasks, EStore* store)
@@ -97,86 +95,86 @@ generateTask(EStore* store)
     // first 30 requests are ADD_ITEM to fill in the store
     int request_type;
 
-    if(taskCount < 30)
+    if (taskCount < 30)
         request_type = ADD_ITEM;
     else
         request_type = rand_request();
 
-    switch(request_type)
+    switch (request_type)
     {
         case ADD_ITEM:
         {
-            AddItemReq* req = new AddItemReq();
-            req->store = store;
-            req->item_id   = rand_id();
-            req->price     = rand_price(MAX_PRICE) + 1;
-            req->quantity  = rand_quantity();
+            auto req = new AddItemReq();
+            req->store    = store;
+            req->item_id  = rand_id();
+            req->price    = rand_price(MAX_PRICE) + 1;
+            req->quantity = rand_quantity();
 
             task.handler = add_item_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         case REMOVE_ITEM:
         {
-            RemoveItemReq* req = new RemoveItemReq();
-            req->store = store;
-            req->item_id   = rand_id();
+            auto req = new RemoveItemReq();
+            req->store   = store;
+            req->item_id = rand_id();
 
             task.handler = remove_item_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         case ADD_STOCK:
         {
-            AddStockReq* req = new AddStockReq();
-            req->store        = store;
+            auto req = new AddStockReq();
+            req->store            = store;
             req->item_id          = rand_id();
             req->additional_stock = rand_quantity();
 
             task.handler = add_stock_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         case CHANGE_ITEM_PRICE:
         {
-            ChangeItemPriceReq* req = new ChangeItemPriceReq();
+            auto req = new ChangeItemPriceReq();
             req->store = store;
-            req->item_id    = rand_id();
-            req->new_price  = rand_price(MAX_PRICE);
+            req->item_id   = rand_id();
+            req->new_price = rand_price(MAX_PRICE);
 
             task.handler = change_item_price_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         case CHANGE_ITEM_DISCOUNT:
         {
-            ChangeItemDiscountReq* req = new ChangeItemDiscountReq();
+            auto req = new ChangeItemDiscountReq();
             req->store = store;
-            req->item_id       = rand_id();
-            req->new_discount  = rand_discount();
+            req->item_id      = rand_id();
+            req->new_discount = rand_discount();
 
             task.handler = change_item_discount_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         case SET_SHIPPING_COST:
         {
-            SetShippingCostReq* req = new SetShippingCostReq();
-            req->store = store;
-            req->new_cost  = rand_price(MAX_SHIPPING_COST);
+            auto req = new SetShippingCostReq();
+            req->store    = store;
+            req->new_cost = rand_price(MAX_SHIPPING_COST);
 
             task.handler = set_shipping_cost_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         case SET_STORE_DISCOUNT:
         {
-            SetStoreDiscountReq* req = new SetStoreDiscountReq();
-            req->store    = store;
+            auto req = new SetStoreDiscountReq();
+            req->store        = store;
             req->new_discount = rand_discount();
 
             task.handler = set_store_discount_handler;
-            task.arg = req;
+            task.arg     = req;
             break;
         }
         default:
@@ -202,30 +200,30 @@ generateTask(EStore* store)
 
     if (!fineMode)
     {
-        BuyItemReq* req = new BuyItemReq();
-        req->store = store;
-        req->item_id   = rand_id();
-        req->budget    = rand_price(MAX_BUDGET) + MIN_BUDGET;
+        auto req = new BuyItemReq();
+        req->store   = store;
+        req->item_id = rand_id();
+        req->budget  = rand_price(MAX_BUDGET) + MIN_BUDGET;
 
         task.handler = buy_item_handler;
-        task.arg = req;
+        task.arg     = req;
     }
     else
     {
-        BuyManyItemsReq* req = new BuyManyItemsReq();
+        auto req = new BuyManyItemsReq();
 
         int num_buy_item = (sutil_random() % MAX_BUY_ITEM) + 1;
 
         set<int> order;
-        for(int i = 0; i < num_buy_item; i++)
+        for (int i = 0; i < num_buy_item; i++)
             order.insert(rand_id());
 
-        req->store = store;
+        req->store  = store;
         req->item_ids.insert(req->item_ids.begin(), order.begin(), order.end());
         req->budget = rand_price(MAX_BUDGET) + MIN_BUDGET;;
 
         task.handler = buy_many_items_handler;
-        task.arg = req;
+        task.arg     = req;
     }
     return task;
 }

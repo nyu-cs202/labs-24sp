@@ -2,14 +2,14 @@
 
 #include <vector>
 
-#define INVENTORY_SIZE 100
+#define INVENTORY_SIZE    100
 
-#define MAX_BUY_ITEM	    8
-#define MAX_QUANTITY	    100
-#define MAX_BUDGET	    3000000
-#define MIN_BUDGET          5000
-#define MAX_PRICE	    1000000
-#define MAX_SHIPPING_COST   10000
+#define MAX_BUY_ITEM      8
+#define MAX_QUANTITY      100
+#define MAX_BUDGET        3000000
+#define MIN_BUDGET        5000
+#define MAX_PRICE         1000000
+#define MAX_SHIPPING_COST 10000
 
 // Forward declaration. Do not remove!!
 class EStore;
@@ -25,8 +25,7 @@ enum SupplierRequestTypes {
     NUM_SUPPLIER_REQUEST_TYPES
 };
 
-struct AddItemReq
-{
+struct AddItemReq {
     EStore* store;
 
     int item_id;
@@ -35,61 +34,53 @@ struct AddItemReq
     double discount;
 };
 
-struct RemoveItemReq
-{
+struct RemoveItemReq {
     EStore* store;
 
     int item_id;
 };
 
-struct AddStockReq
-{
+struct AddStockReq {
     EStore* store;
 
     int item_id;
     int additional_stock;
 };
 
-struct ChangeItemPriceReq
-{
+struct ChangeItemPriceReq {
     EStore* store;
 
     int item_id;
     double new_price;
 };
 
-struct ChangeItemDiscountReq
-{
+struct ChangeItemDiscountReq {
     EStore* store;
 
     int item_id;
     double new_discount;
 };
 
-struct SetShippingCostReq
-{
+struct SetShippingCostReq {
     EStore* store;
 
     double new_cost;
 };
 
-struct SetStoreDiscountReq
-{
+struct SetStoreDiscountReq {
     EStore* store;
 
     double new_discount;
 };
 
-struct BuyItemReq
-{
+struct BuyItemReq {
     EStore* store;
 
     int item_id;
     double budget;
 };
 
-struct BuyManyItemsReq
-{
+struct BuyManyItemsReq {
     EStore* store;
 
     std::vector<int> item_ids;

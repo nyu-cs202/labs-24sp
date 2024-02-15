@@ -34,7 +34,6 @@ class Item {
 
     Item();
     ~Item();
-
 };
 
 
@@ -78,7 +77,7 @@ class EStore {
 
     // no default copy constructor and assignment operators. this will prevent some
     // painful bugs by converting them into compiler errors.
-    EStore(const EStore&) = delete; 
+    EStore(const EStore&) = delete;
     EStore& operator=(const EStore &) = delete;
 
     void buyItem(int item_id, double budget);

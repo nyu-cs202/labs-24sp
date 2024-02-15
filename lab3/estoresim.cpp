@@ -4,8 +4,7 @@
 #include "EStore.h"
 #include "TaskQueue.h"
 
-class Simulation
-{
+class Simulation {
     public:
     TaskQueue supplierTasks;
     TaskQueue customerTasks;
