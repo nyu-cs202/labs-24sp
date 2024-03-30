@@ -1,0 +1,8 @@
+/build
+/mnt
+*.out
+*.pyc
+.*.swp
+*~
+*.img
+fs.out.*

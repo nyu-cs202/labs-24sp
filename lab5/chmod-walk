@@ -1,0 +1,55 @@
+#!/usr/bin/env python2
+
+import sys, os, stat, optparse, re
+
+def do_input(thisdir):
+    global always_yes
+    homename = os.path.basename(os.path.abspath(os.path.expanduser("~")))
+    thisdir = re.sub("(.*?)/%s" % homename, "~", thisdir)
+    if always_yes:
+        print "chmod og+x %s" % thisdir
+        return "y"
+    else:
+        return raw_input("chmod og+x \"%s\"? [y/N] " % thisdir)
+
+def setexec(head, tail):
+    if head == "/" and tail == "":
+        return
+    else:
+        thisdir = os.path.join(head, tail)
+        st = os.stat(thisdir)
+        uid = st.st_uid
+        if uid != os.getuid():
+            return
+        else:
+            setexec(*os.path.split(head))
+        if (st.st_mode & stat.S_IXGRP) == stat.S_IXGRP:
+            if (st.st_mode & stat.S_IXOTH) == stat.S_IXOTH:
+                return # Directory already has the right permissions.
+        res = do_input(thisdir)
+        if res in ("y", "Y"):
+            os.chmod(thisdir, st.st_mode | stat.S_IXGRP | stat.S_IXOTH)
+        else:
+            print """Warning!
+
+You may not be able to run the file systems lab without setting directory
+permissions correctly.  If you can't set permissions on some directory in
+the path, you should move the lab directory to somewhere else and run this
+script again.
+
+Aborting."""
+            sys.exit(1)
+
+def main(argv):
+    global always_yes
+    parser = optparse.OptionParser()
+    parser.add_option("-y", "--yes", help="assume yes to all prompts",
+                      action="store_true", dest="always_yes", default=False)
+    (options, args) = parser.parse_args(argv)
+    always_yes = options.always_yes
+    setexec(*os.path.split(os.getcwd()))
+    print "Directory permissions are set correctly."
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

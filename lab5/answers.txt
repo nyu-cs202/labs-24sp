@@ -1,0 +1,24 @@
+Name:
+net ID:
+NYU ID(N#):
+
+Collaborators (who you talked to about the lab, what you talked about):
+
+
+Source material that you consulted:
+
+
+Other acknowledgments:
+
+
+
+Output for exercise 6:
+
+
+How long did this lab take you?
+
+
+Anything else you'd like us to know:
+
+
+Extra credit exercise(s) (describe what you coded):

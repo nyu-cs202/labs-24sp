@@ -1,0 +1,69 @@
+#!/usr/bin/env python2
+
+from gradelib import *
+import os
+import sys
+
+# check if script is run with sudo, if not then exit
+if os.geteuid() != 0:
+    print("This script must be run with sudo!")
+    print("> \'sudo ./grade-lab\'")
+    sys.exit(1)
+
+r = Runner()
+
+def matchtest(parent, name, points, *args, **kw):
+    def do_test():
+        r.match(*args, **kw)
+    test(points, name, parent=parent)(do_test)
+
+@test(0, "core file system operations")
+def test_core_ops():
+    r.run_test("test/testbasic.bash")
+matchtest(test_core_ops, "alloc_block", 5,
+          "alloc_block is good")
+matchtest(test_core_ops, "inode_open", 5,
+          "inode_open is good")
+matchtest(test_core_ops, "inode_get_block", 5,
+          "inode_get_block is good")
+matchtest(test_core_ops, "inode_flush/inode_truncate/file rewrite", 5,
+          "inode_truncate is good",
+          "file rewrite is good")
+matchtest(test_core_ops, "inode_link/inode_unlink", 5,
+          "inode_link is good",
+          "inode_unlink is good")
+
+@test(0, "posix file operations on mounted file system")
+def test_posix_ops():
+    r.run_test("test/testposixio.bash")
+matchtest(test_posix_ops, "open/stat/close", 5,
+          "open is good",
+          "inode_stat is good",
+          "inode_close is good")
+matchtest(test_posix_ops, "read/write/read after write", 5,
+          "inode_read is good",
+          "inode_write is good",
+          "inode_read after inode_write is good")
+matchtest(test_posix_ops, "large file", 5,
+          "large file is good")
+
+@test(25, "file system stress test")
+def test_stressfs():
+    r.run_test("test/teststress.bash")
+    r.match("teststress pass")
+
+@test(0, "extra metadata checks")
+def test_extra_metadata():
+    pass
+
+@test(5, "chmod", parent=test_extra_metadata)
+def test_mode():
+    r.run_test("test/testmode.bash")
+    r.match("testmode pass")
+
+@test(5, "atime/ctime/mtime", parent=test_extra_metadata)
+def test_time():
+    r.run_test("test/testtime.bash")
+    r.match("testtime pass")
+
+run_tests()
