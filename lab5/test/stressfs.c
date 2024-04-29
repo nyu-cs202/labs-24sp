@@ -96,7 +96,7 @@ phase4_rmdir(char *buf, char dname, int p)
 	buf[p] = '\0';
 	printf("\tremoved %s\n", buf);
 	if ((r = rmdir(buf)) < 0)
-		panic("rmdir %s: %e", buf, r);
+		panic("rmdir %s: %s", buf, strerror(errno));
 }
 
 int
