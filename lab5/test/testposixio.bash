@@ -2,7 +2,7 @@
 
 . test/libtest.bash
 
-gcc test/posixio.c -o build/posixio || fail "can't build posixio binary"
+gcc -g test/posixio.c -o build/posixio || fail "can't build posixio binary"
 
 fuse_unmount
 recreate_mnt

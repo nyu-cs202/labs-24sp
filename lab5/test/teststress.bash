@@ -2,7 +2,7 @@
 
 . test/libtest.bash
 
-gcc test/stressfs.c -o build/stressfs || fail "can't build stressfs binary"
+gcc -g test/stressfs.c -o build/stressfs || fail "can't build stressfs binary"
 
 fuse_unmount
 recreate_mnt
